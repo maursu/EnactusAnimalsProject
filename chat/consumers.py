@@ -87,6 +87,7 @@ class ChatConsumer(WebsocketConsumer):
             user_image = domain + Profileserializer(user).data['image']
         except:
             user_image = None
+            
         message =models.Message.objects.create(content=message, room = self.room, author=user)
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(

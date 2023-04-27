@@ -36,6 +36,7 @@ class Announcement(models.Model):
             self.slug = slugify(self.title)
         return super().save(*agrs, **kwargs)
 
+
     def get_today_count(self):
         today = datetime.now().date()
         return Announcement.objects.filter(created_at__date=today).count()
