@@ -31,8 +31,10 @@ class Announcement(models.Model):
         return self.title
 
     def save(self, *agrs, **kwargs):
-        self.slug = slugify(self.title)
+        if not self.slug:
+            self.slug = slugify(self.title)
         return super().save(*agrs, **kwargs)
+
 
     def get_today_count(self):
         today = datetime.now().date()
