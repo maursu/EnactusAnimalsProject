@@ -198,7 +198,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 #debug-toolbar
 INTERNAL_IPS = [
-    # ...
+    "enactusanimals.com"
     "127.0.0.1",
     # ...
 ]
@@ -206,3 +206,4 @@ INTERNAL_IPS = [
 
 #CSRF 
 CSRF_TRUSTED_ORIGINS=['https://enactusanimals.com', 'http://enactusanimals.com']
+

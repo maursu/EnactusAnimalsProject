@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from math import sqrt
 
 from . import models
-
-
+from review.models import Favorite
 
 
 User = get_user_model()
@@ -33,6 +33,7 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     photos = AnnouncePhotoSerializer(many=True, read_only=True)
     user_photo = serializers.SerializerMethodField()
     user_name = serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Announcement
@@ -47,4 +48,9 @@ class AnnouncementSerializer(serializers.ModelSerializer):
     def get_user_name(self, instance):
         user_name = instance.user.first_name
         return user_name
-
+    
+    def get_rating(self, instance):
+        views = instance.views_count
+        favorites = Favorite.objects.filter(is_favorite=True, announcement=instance.pk).count()
+        total_rating = round((sqrt(((views)**2)+((favorites**2)**2))/2), 2)
+        return total_rating
